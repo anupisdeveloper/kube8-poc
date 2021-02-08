@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: kube8-service
+    labels:
+      mode: kube8-poc
+spec:
+    selector:
+        app: kube8-api
+        mode: kube8-poc
+    type: LoadBalancer
+    ports:
+      - port: 8080
+        targetPort: 8080

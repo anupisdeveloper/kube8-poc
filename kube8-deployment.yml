@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube8-deployment
+  labels:
+    mode: kube8-poc
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kube8-api
+      mode: kube8-poc
+  template:
+    metadata:
+      labels:
+        app: kube8-api
+        mode: kube8-poc
+    spec:     # pod spec                  
+      containers: 
+      - name: kube8-api
+        image: anupisdeveloper/kube8-app # image we pushed
+        env: # add env if any env used in your app
+        - name: MYSQL_COFIG_URL
+          value: "my sql cofig Url passed from here"
+        - name: APP_ORIGIN
+          value: "your UI application Url"
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            memory: "300Mi"
+            cpu: "200m"
+          requests:
+             memory: "300Mi"
+             cpu: "200m"
+

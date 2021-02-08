@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata: 
+  name: kube8-ingress
+  namespace: default
+  annotations:
+#    allow-http: false
+#      nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.allow-http: "false"
+    ncp/http-redirect: "true"
+spec: 
+  rules: 
+    - host: rca-api.eps-rca-npdp1-pks.npdp1.pks.dell.com # host name which you want to assign to app based on ur cluster
+      http: 
+          paths:
+           - backend: 
+               serviceName: kube8-service
+               servicePort: 8080
+               
+  tls:
+    - hosts:
+        - rca-api.eps-rca-npdp1-pks.npdp1.pks.dell.com # host name for which you want to enable TLS
+      secretName: <TLS Secret name>
